@@ -1,0 +1,16 @@
+version: '2'
+services:
+  my_app:
+    build: .
+    ports:
+      - "5000:5000"
+    links:
+      - my_postgres
+
+  my_postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"

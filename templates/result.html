@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<body>
+<table border=1>
+    {% for key, value in result.iteritems() %}
+    <table border=1>
+        <tr>
+            <td>payer country: {{ key.payerCountry}}</td>
+        </tr>
+        <tr>
+            <td>beneficiary country: {{ key.beneficiaryCountry}}</td>
+        </tr>
+        <tr>
+            <td>transaction type: {{ key.transactionType}}</td>
+        </tr>
+        <tr>
+            <td>channel: {{ key.channel }}</td>
+        </tr>
+        <tr>
+            <td>payment method: {{ key.paymentMethod}}</td>
+        </tr>
+        <tr>
+            <td>payment country: {{ key.paymentCountry}}</td>
+        </tr>
+        <tr>
+            <td>payment currency: {{ key.paymentCurrency}}</td>
+        </tr>
+    </table>
+    <table border=1>
+        {% for field in value %}
+        <tr>
+            <td> {{ field }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br/>
+    {% endfor %}
+</table>
+
+</body>
+</html>

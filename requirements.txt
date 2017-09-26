@@ -1,0 +1,9 @@
+openpyxl
+dotmap
+wtforms
+Flask
+Jinja2
+SQLAlchemy
+Flask-SQLAlchemy
+Flask-Login
+psycopg2

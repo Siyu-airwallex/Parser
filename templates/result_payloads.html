@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div.container {
+    width: 100%;
+    border: 1px solid gray;
+}
+
+header, footer {
+    padding: 1em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: center;
+}
+
+div.left {
+    float: left;
+}
+
+
+div.right {
+    padding: 1em;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<header>
+   <h1>Payload Examples</h1>
+</header>
+{% for key, value in payloads.iteritems() %}
+<p>
+<div class="left">
+    <table border=1>
+        <tr>
+            <td>payer country: {{ key.payerCountry}}</td>
+        </tr>
+        <tr>
+            <td>beneficiary country: {{ key.beneficiaryCountry}}</td>
+        </tr>
+        <tr>
+            <td>transaction type: {{ key.transactionType}}</td>
+        </tr>
+        <tr>
+            <td>channel: {{ key.channel }}</td>
+        </tr>
+        <tr>
+            <td>payment method: {{ key.paymentMethod}}</td>
+        </tr>
+        <tr>
+            <td>payment country: {{ key.paymentCountry}}</td>
+        </tr>
+        <tr>
+            <td>payment currency: {{ key.paymentCurrency}}</td>
+        </tr>
+    </table>
+</div>
+</p>
+
+<p>
+<div class="right">
+   <p> {{value}} </p>
+</div>
+</p>
+
+<br/>
+<br/>
+{% endfor %}
+
+</div>
+<footer>Copyright &copy; airwallex.com</footer>
+
+</body>
+</html>
+
+
+
+

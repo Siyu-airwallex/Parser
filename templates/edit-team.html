@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>Edit Team Members</title>
+    </head>
+    <body>
+        <h1>Payment Fields Search</h1>
+        <div>
+            <form action="" method="post" name="groupform">
+                Search Title: {{ groupform.title }}<br>
+                <div>
+                    <table>
+                        <tr>
+                            <th> payment country </th>
+                            <th> beneficiary country </th>
+                            <th> transaction type </th>
+                            <th> channel </th>
+                            <th> payment method </th>
+                            <th> payment country </th>
+                            <th> payment currency </th>
+                        </tr>
+                        {% for member in groupform.transactionmembers %}
+                        <tr>
+                            <td>{{ member.payerCountry }}</td>
+                            <td>{{ member.beneficiaryCountry }}</td>
+                            <td>{{ member.transactionType }}</td>
+                            <td>{{ member.channel }}</td>
+                            <td>{{ member.paymentMethod }}</td>
+                            <td>{{ member.paymentCountry }}</td>
+                            <td>{{ member.paymentCurrency }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <p><input type="submit" name="edit" value="Send"></p>
+            </form>
+        </div>
+    </body>
+</html>
