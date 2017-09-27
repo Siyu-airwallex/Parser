@@ -1,88 +1,129 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-div.container {
-    width: 100%;
-    border: 1px solid gray;
-}
+    <style>
 
-header, footer {
-    padding: 1em;
-    color: white;
-    background-color: black;
-    clear: left;
-    text-align: center;
-}
+    html,
+    body {
+       margin:0;
+       padding:0;
+       height:100%;
+    }
 
-div.left {
-    float: left;
-    margin: 0;
-    width: 240px;
-    padding: 1em;
-}
+    #container {
+        width: 100%;
+        border: 1px solid gray;
+        min-height:100%;
+        position:relative;
+    }
+
+    header {
+        background:#ff0;
+        padding:10px;
+        padding: 1em;
+        color: white;
+        background-color: black;
+        clear: left;
+        text-align: center;
+        height:60px;
+    }
+
+    .body {
+        display: flex;
+        padding:10px;
+        padding-bottom:100px;   /* Height of the footer */
+    }
+
+    footer {
+        width:100%;
+        height:30px;   /* Height of the footer */
+        background:#6cf;
+        padding: 1em;
+        color: white;
+        background-color: black;
+        clear: left;
+        text-align: center;
+    }
+
+    div.left {
+        float: left;
+        margin: 0;
+        width: 320px;
+        padding: 1em;
+    }
 
 
-div.right {
-    margin-left: 280px
-    padding: 1em;
-    border-left: 2px solid gray;
-}
+    div.right {
+        float: right;
+        padding: 1em;
+        border-left: 2px solid gray;
+    }
+    td {
+        font-size: 18px;
+        max-width: 320px;
+        word-wrap: break-word
 
+    }
 
-</style>
+    .rightTD {
+        font-size: 18px;
+        max-width: 500px;
+        color: red;
+    }
+    </style>
 </head>
 
 <body>
-
-<div class="container">
 <header>
-   <h1>Required Fields</h1>
+    <h1>Required Fields</h1>
 </header>
-{% for key, value in required_fields.iteritems() %}
-<div class="left">
-    <table border=1>
-        <tr>
-            <td>payer country: {{ key.payerCountry}}</td>
-        </tr>
-        <tr>
-            <td>beneficiary country: {{ key.beneficiaryCountry}}</td>
-        </tr>
-        <tr>
-            <td>transaction type: {{ key.transactionType}}</td>
-        </tr>
-        <tr>
-            <td>channel: {{ key.channel }}</td>
-        </tr>
-        <tr>
-            <td>payment method: {{ key.paymentMethod}}</td>
-        </tr>
-        <tr>
-            <td>payment country: {{ key.paymentCountry}}</td>
-        </tr>
-        <tr>
-            <td>payment currency: {{ key.paymentCurrency}}</td>
-        </tr>
-    </table>
+
+<div id="container">
+    {% for key, value in required_fields.iteritems() %}
+    <div class="body">
+        <div class="left">
+            <table>
+                <tr>
+                    <td>payer country: {{ key.payerCountry}}</td>
+                </tr>
+                <tr>
+                    <td>beneficiary country: {{ key.beneficiaryCountry}}</td>
+                </tr>
+                <tr>
+                    <td>transaction type: {{ key.transactionType}}</td>
+                </tr>
+                <tr>
+                    <td>channel: {{ key.channel }}</td>
+                </tr>
+                <tr>
+                    <td>payment method: {{ key.paymentMethod}}</td>
+                </tr>
+                <tr>
+                    <td>payment country: {{ key.paymentCountry}}</td>
+                </tr>
+                <tr>
+                    <td>payment currency: {{ key.paymentCurrency}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="right">
+            <table>
+                {% for field in value %}
+                <tr>
+                    <td class="rightTD"> {{ field }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <br/>
+        <br/>
+    </div>
+    {% endfor %}
 </div>
 
-<div class="right">
-      <table border=1>
-        {% for field in value %}
-        <tr>
-            <td> {{ field }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
-
-<br/>
-<br/>
-{% endfor %}
-
-</div>
-
-<footer>Copyright &copy; airwallex.com</footer>
+<footer>
+    Copyright &copy; airwallex.com
+</footer>
 </body>
 </html>
 

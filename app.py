@@ -101,27 +101,6 @@ def result():
       return render_template("result_payloads.html", payloads=payloads)
 
 
-# @app.route('/testdb', methods = ['POST','GET'])
-# def testdb():
-#   admin = User('charlie', "password")
-#   guest = User('stefanie', "password")
-#   with app.app_context():
-#     db.create_all()
-#   db.session.add(admin)
-#   db.session.add(guest)
-#
-#   db.session.commit()
-#   results = User.query.all()
-#
-#   jsonl_results = []
-#   for result in results:
-#     d = {'username': result.username,
-#          'password': result.password}
-#     jsonl_results.append(d)
-#
-#   return jsonify(items=jsonl_results)
-
-
 
 if __name__ == '__main__':
 	#print jdata

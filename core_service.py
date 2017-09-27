@@ -17,7 +17,7 @@ class Parser:
   def __init__(self, transaction):
     reload(sys)
     sys.setdefaultencoding('utf-8')
-    self.matrix = load_workbook('Source/Template3.xlsx')['stefanie']
+    self.matrix = load_workbook('Source/TemplateFinal.xlsx')['stefanie']
     self.transaction = transaction
 
   def setTransaction(self, transaction):

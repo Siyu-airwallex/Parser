@@ -21,6 +21,30 @@ input[type=text]:focus {
     width: 100%;
 }
 
+.select-style {
+    font-size: 16px;
+    border: 2px solid #ccc;
+    width: 130px;
+    overflow: hidden;
+    background: #fafafa url("img/icon-select.png") no-repeat 90% 50%;
+}
+
+.select-style select {
+    font-size: 16px;
+    padding: 12px 20px;
+    width: 130%;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+}
+
+.select-style select:focus {
+    outline: none;
+}
+
+
     </style>
 </head>
 <body>
@@ -37,13 +61,36 @@ input[type=text]:focus {
     <input type="text" name="beneficiary_country"/>
     <br>
     Transaction Type:<br>
-    <input type="text" name="transaction_type"/>
+    <div class="select-style">
+    <select name="transaction_type">
+    <option value="*">*</option>
+    <option value="P2P">P2P</option>
+    <option value="P2B">P2B</option>
+    <option value="B2P">B2P</option>
+    <option value="B2B">B2B</option>
+    </select>
+    </div>
     <br>
     Channel:<br>
-    <input type="text" name="channel"/>
+    <div class="select-style">
+    <select name="channel">
+      <option value="*">*</option>
+      <option value="ICBC">ICBC</option>
+      <option value="BOS">BOS</option>
+      <option value="CITIC">CITIC</option>
+      <option value="NAB">NAB</option>
+      <option value="CC">CC</option>
+    </select>
+    </div>
     <br>
     Payment Method:<br>
-    <input type="text" name="payment_method"/>
+    <div class="select-style">
+    <select name="payment_method">
+      <option value="*">*</option>
+      <option value="LOCAL">LOCAL</option>
+      <option value="SWIFT">SWIFT</option>
+    </select>
+    </div>
     <br>
     Payment Country:<br>
     <input type="text" name="payment_country"/>
