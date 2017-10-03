@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 
 MAINTAINER Airwallex
 
-LABEL version="1.0" description="Parser of Source of Truth"
+LABEL version="1.5" description="Parser of Source of Truth"
 
 
 RUN apt-get update

@@ -7,3 +7,5 @@ SQLAlchemy
 Flask-SQLAlchemy
 Flask-Login
 psycopg2
+Redis
+Flask-Redis

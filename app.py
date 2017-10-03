@@ -3,11 +3,16 @@ from flask_login import login_required, LoginManager, login_user
 from core_service import Parser
 from Model.Transaction import Transaction
 from Model.user import User, db
+from flask_redis import FlaskRedis
+import cPickle as pickle
+import redis
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:password@my_postgres/postgres'
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:password@localhost/postgres'
+app.config['REDIS_URL'] = "redis://:@my_redis:6379/"
+#app.config['REDIS_URL'] = "redis://:@localhost:6379/"
 db.init_app(app)
 with app.app_context():
   db.create_all()
@@ -17,9 +22,9 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+redis_store = FlaskRedis(app)
 
 parser = Parser(Transaction())
-
 
 @login_manager.user_loader
 def load_user(id):
@@ -88,19 +93,50 @@ def result():
     print 'paymentCurrency'+ paymentCurrency
 
     transaction = Transaction(payerCountry,beneficiaryCountry, transactionType, channel, paymentMethod, paymentCountry, paymentCurrency)
-    parser.setTransaction(transaction)
 
+    transKey = pickle.dumps(transaction)
     search_type = request.form.get('type')
-    if search_type == 'field':
-      required_fields = parser.dumpRequiredFields()
-      print required_fields
-      return render_template("result_fields.html", required_fields=required_fields)
+    isRedisAlive = True
+    try:
+      llen = redis_store.llen(transKey)
+    except redis.exceptions.ConnectionError as e:
+      isRedisAlive = False
+      print "Redis service dead!"
+
+    if isRedisAlive:
+      if llen == 0 :
+        parser.setTransaction(transaction)
+        required_fields = parser.dumpRequiredFields()
+        payloads = parser.generateTest()
+        requiredFieldsValue = pickle.dumps(required_fields)
+        payloadsValue = pickle.dumps(payloads)
+
+        redis_store.rpush(transKey,requiredFieldsValue, payloadsValue)
+
+        if search_type == 'field':
+          print required_fields
+          return render_template("result_fields.html", required_fields=required_fields)
+        else:
+          print payloads
+          return render_template("result_payloads.html", payloads=payloads)
+      else:
+        requiredFieldsValue = redis_store.lindex(transKey, 0)
+        payloadsValue = redis_store.lindex(transKey, 1)
+        required_fields = pickle.loads(requiredFieldsValue)
+        payloads = pickle.loads(payloadsValue)
+        if search_type == 'field':
+          return render_template("result_fields.html", required_fields=required_fields)
+        else:
+          return render_template("result_payloads.html", payloads=payloads)
+
     else:
+      parser.setTransaction(transaction)
+      required_fields = parser.dumpRequiredFields()
       payloads = parser.generateTest()
-      print payloads
-      return render_template("result_payloads.html", payloads=payloads)
-
-
+      if search_type == 'field':
+        return render_template("result_fields.html", required_fields=required_fields)
+      else:
+        return render_template("result_payloads.html", payloads=payloads)
 
 if __name__ == '__main__':
 	#print jdata
