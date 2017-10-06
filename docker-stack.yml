@@ -1,0 +1,62 @@
+version: '3'
+services:
+  my_app:
+    image: charliefeng/parser:1.5
+    ports:
+      - 5000:5000
+    networks:
+      - parserapp
+    depends_on:
+      - my_postgres
+      - my_redis
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+
+  my_postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+    networks:
+      - parserapp
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+
+  my_redis:
+    image: redis
+    ports:
+      - 6379:6379
+    networks:
+      - parserapp
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 128M
+        reservations:
+          cpus: "0.5"
+          memory: 64M
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - 8080:8080
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - parserapp
+
+networks:
+  parserapp:

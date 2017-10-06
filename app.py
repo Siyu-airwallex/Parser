@@ -9,14 +9,17 @@ import redis
 
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:password@my_postgres/postgres'
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:password@localhost/postgres'
 app.config['REDIS_URL'] = "redis://:@my_redis:6379/"
 #app.config['REDIS_URL'] = "redis://:@localhost:6379/"
 db.init_app(app)
 with app.app_context():
-  db.create_all()
-  db.session.commit()
+    db.create_all()
+    db.session.commit()
+
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)

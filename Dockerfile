@@ -20,8 +20,8 @@ RUN pip install -r requirements.txt
 
 EXPOSE 5000
 
-HEALTHCHECK --interval=5s --timeout=2s --start-period=20m --retries=3 \
-    CMD curl --fail http://localhost:5000/login || exit 1
+#HEALTHCHECK --interval=5s --timeout=2s --start-period=20m --retries=3 \
+#    CMD curl --fail http://localhost:5000/login || exit 1
 
 ENTRYPOINT ["python"]
 CMD ["app.py"]

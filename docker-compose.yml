@@ -6,9 +6,10 @@ services:
     ports:
       - "5000:5000"
     links:
-      - my_postgres
-    depends_on:
       - my_redis
+    depends_on:
+      - my_postgres
+    restart: on-failure
 
   my_postgres:
     image: postgres
@@ -17,8 +18,10 @@ services:
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
+    restart: on-failure
 
   my_redis:
     image: redis
     ports:
       - "6379:6379"
+    restart: on-failure
